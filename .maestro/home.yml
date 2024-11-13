@@ -1,0 +1,9 @@
+appId: com.squer.autotestwithmaestro
+tags:
+  - pr
+  - weekly
+  - deploy
+---
+- runFlow: helper/openApp.yml
+- assertVisible:
+    id: "mainTitle"
