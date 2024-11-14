@@ -4,7 +4,6 @@
   },
   "build": {
     "development-simulator": {
-      "owner": "djrepo",
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
@@ -13,12 +12,10 @@
       "channel": "staging"
     },
     "preview": {
-      "owner": "djrepo",
       "distribution": "internal",
       "channel": "preview"
     },
     "production": {
-      "owner": "djrepo",
       "channel": "production"
     }
   },

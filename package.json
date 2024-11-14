@@ -8,8 +8,8 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest",
-    "test:e2e:ci:ios": "yarn sucrase-node scripts/downloadAndSendToMaestro.ts --platform ios --appIdentifier com.squer.autotestwithmaestro --buildProfile development-simulator --repoOwner DaliborJacko --repoName automationtest-maestro",
-    "test:e2e:ci:android": "yarn sucrase-node scripts/downloadAndSendToMaestro.ts --platform android --appIdentifier com.squer.autotestwithmaestro --buildProfile development-simulator --repoOwner DaliborJacko --repoName automationtest-maestro"
+    "test:e2e:ci:ios": "yarn sucrase-node scripts/downloadAndSendToMaestro.ts --platform ios --appIdentifier com.squer.autotestwithmaestro --buildProfile development-simulator --repoOwner djrepo --repoName automationtest-maestro",
+    "test:e2e:ci:android": "yarn sucrase-node scripts/downloadAndSendToMaestro.ts --platform android --appIdentifier com.squer.autotestwithmaestro --buildProfile development-simulator --repoOwner djrepo --repoName automationtest-maestro"
   },
   "jest": {
     "preset": "jest-expo"
