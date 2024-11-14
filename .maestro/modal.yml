@@ -9,7 +9,6 @@ tags:
     id: "dialogTitle"
 #- swipe:
 #    from: 'Info'
-
 #    direction: DOWN
 - tapOn: "Navigate up"
 - assertNotVisible: "A cool modal"
