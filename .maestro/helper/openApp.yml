@@ -3,7 +3,7 @@ env:
   EXPO_UPDATE_URL_BASE: https://u.expo.dev/update/
   IOS_LOCALHOST_URL: http://localhost:8081/?platform=ios&dev=true&minify=false&disableOnboarding=1
   ANDROID_LOCALHOST_URL: http://10.0.2.2:8081/?platform=android&dev=true&minify=false&disableOnboarding=1
-  EXPO_DEV_CLIENT_LINK_BASE: exp+maestro-expo://expo-development-client/?url=
+  EXPO_DEV_CLIENT_LINK_BASE: exp+automationtest-maestro://expo-development-client/?url=
 ---
 - runFlow: # IOS localhost
     when:

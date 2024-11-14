@@ -42,7 +42,7 @@ const cli = meow(
     --repoOwner               The owner of the repository.
                                 > Example: DaliborJacko
     --repoName                The name of the repository.
-                                > Example: maestro-expo
+                                > Example: automationtest-maestro
     --pullRequestId           The unique identifier of the pull request.
                                 > Example: 1234
     --commitSha               The commit hash.
