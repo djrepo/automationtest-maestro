@@ -3,6 +3,7 @@ tags:
   - deploy
 ---
 #- runFlow: helper/openApp.yml
+- runFlow: helper/onboarding-android.yml
 - tapOn:
     id: "modal-info"
 - assertVisible:

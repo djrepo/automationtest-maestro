@@ -4,6 +4,7 @@ tags:
   - deploy
 ---
 #- runFlow: helper/openApp.yml
+- runFlow: helper/onboarding-android.yml
 - tapOn:
     id: "tab-settings"
 - assertVisible: "Settings page"

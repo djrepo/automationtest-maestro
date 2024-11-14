@@ -1,0 +1,4 @@
+appId: com.squer.autotestwithmaestro
+---
+- launchApp:
+    clearState: true
