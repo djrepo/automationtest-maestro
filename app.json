@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "automationtest-maestro",
-    "slug": "automationtest-maestro",
+    "slug": "automationtest-maestro-eas",
     "version": "1.0.0",
     "runtimeVersion": "1.0.0",
     "orientation": "portrait",
@@ -43,12 +43,12 @@
         "origin": false
       },
       "eas": {
-        "owner": "djrepo",
         "projectId": "c1fedce4-d8d6-4d61-9e09-dd4700262a1a"
       }
     },
     "updates": {
       "url": "https://u.expo.dev/c1fedce4-d8d6-4d61-9e09-dd4700262a1a"
-    }
+    },
+    "owner": "djrepo"
   }
 }
