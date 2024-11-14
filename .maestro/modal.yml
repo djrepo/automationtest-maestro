@@ -5,8 +5,8 @@ tags:
 - runFlow: helper/openApp.yml
 - tapOn:
     id: "modal-info"
-- assertVisible:
-    id: "dialogTitle"
+- assertVisible: "A cool modal"
+#   id: "dialogTitle"
 #- swipe:
 #    from: 'Info'
 #    direction: DOWN

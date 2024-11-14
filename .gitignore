@@ -27,7 +27,6 @@ android/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-yarn.lock
 
 # debug
 npm-debug.*
