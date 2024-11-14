@@ -52,7 +52,7 @@ jobs:
       run: |
         curl -Ls "https://get.maestro.mobile.dev" | bash
         export PATH="$PATH":"$HOME/.maestro/bin"
-        yarn test:e2e:ci:android --android-update-id ${{ steps.preview.outputs.androidId }} --apiKey ${{ secrets.MAESTRO_API_KEY }} --tags pr,weekly,deploy --name Deploy
+        yarn test:e2e:ci:android --android-update-id ${{ steps.preview.outputs.androidId }} --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --tags pr,weekly,deploy --name Deploy
 
     - name: Deploy to Production
       run: |

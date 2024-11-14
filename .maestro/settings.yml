@@ -3,7 +3,7 @@ tags:
   - weekly
   - deploy
 ---
-- runFlow: helper/openApp.yml
+#- runFlow: helper/openApp.yml
 - tapOn:
     id: "tab-settings"
 - assertVisible: "Settings page"

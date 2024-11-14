@@ -2,7 +2,7 @@ appId: com.squer.autotestwithmaestro
 tags:
   - deploy
 ---
-- runFlow: helper/openApp.yml
+#- runFlow: helper/openApp.yml
 - tapOn:
     id: "modal-info"
 - assertVisible:

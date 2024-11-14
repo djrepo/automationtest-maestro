@@ -4,6 +4,6 @@ tags:
   - weekly
   - deploy
 ---
-- runFlow: helper/openApp.yml
+#- runFlow: helper/openApp.yml
 - assertVisible:
     id: "mainTitle"
