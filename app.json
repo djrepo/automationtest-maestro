@@ -43,6 +43,7 @@
         "origin": false
       },
       "eas": {
+        "owner": "djrepo",
         "projectId": "c1fedce4-d8d6-4d61-9e09-dd4700262a1a"
       }
     },
