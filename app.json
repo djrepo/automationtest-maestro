@@ -43,11 +43,11 @@
         "origin": false
       },
       "eas": {
-        "projectId": "b7a08cd9-b684-46ce-a6ef-461154f82a75"
+        "projectId": "c1fedce4-d8d6-4d61-9e09-dd4700262a1a"
       }
     },
     "updates": {
-      "url": "https://u.expo.dev/b7a08cd9-b684-46ce-a6ef-461154f82a75"
+      "url": "https://u.expo.dev/c1fedce4-d8d6-4d61-9e09-dd4700262a1a"
     }
   }
 }
