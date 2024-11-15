@@ -7,7 +7,7 @@ tags:
 - tapOn:
     id: "modal-info"
 - assertVisible:
-    id: "dialogTitle"
+    id: "dialog-title"
 - runFlow:
     when:
       platform: iOS
