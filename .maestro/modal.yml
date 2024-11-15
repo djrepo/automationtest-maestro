@@ -3,13 +3,24 @@ tags:
   - deploy
 ---
 #- runFlow: helper/openApp.yml
-- runFlow: helper/onboarding-android.yml
+- runFlow: helper/openApp_preview.yml
 - tapOn:
     id: "modal-info"
 - assertVisible:
     id: "dialogTitle"
-#- swipe:
-#    from: 'Info'
-#    direction: DOWN
-- tapOn: "Navigate up"
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+    - swipe:
+       from: 'Info'
+       direction: DOWN
+- runFlow:
+    when:
+      platform: android
+    commands:
+      - tapOn: "Navigate up"
 - assertNotVisible: "A cool modal"
+
+
+

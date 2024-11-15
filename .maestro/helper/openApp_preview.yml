@@ -1,0 +1,14 @@
+appId: com.squer.autotestwithmaestro
+---
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - launchApp:
+          clearState: true
+- runFlow:
+    when:
+      platform: android
+    commands:
+      - launchApp:
+          clearState: true
