@@ -45,7 +45,8 @@ jobs:
       uses: expo/expo-github-action/preview@v8
       id: preview
       with:
-        command: eas update --auto
+#        command: eas update --auto
+        command: eas build --platform all --profile preview
         comment: false
 
     - name: E2E tests with Maestro
