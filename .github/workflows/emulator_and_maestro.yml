@@ -98,6 +98,12 @@ jobs:
           distribution: temurin
           java-version: 11
 
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
       - name: Install Maestro
         run: MAESTRO_VERSION=1.39.2 curl -Ls 'https://get.maestro.mobile.dev' | bash
 
