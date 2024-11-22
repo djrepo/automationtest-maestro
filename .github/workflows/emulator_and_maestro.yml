@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Build preview and run E2E on local emulator
 
 on:
   push:
@@ -6,21 +6,9 @@ on:
       - master
 
 jobs:
-  deploy:
+  setup:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      max-parallel: 5
-      matrix: # only these combinations work stable on `ubuntu-*`:
-        api-level: [26, 27, 28]
-        arch: [x86, x86_64]
-        target: [default]
-        # Print all available Android emulators: `sdkmanager --list --verbose | grep system-images`
-        include:
-          - api-level: 26
-            target: google_apis
-            arch: x86
+    timeout-minutes: 90
 
     steps:
       - name: Checkout code
@@ -58,16 +46,35 @@ jobs:
         uses: expo/expo-github-action/preview@v8
         id: preview
         with:
-          #        command: eas update --auto
           command: eas build --platform all --profile preview
           comment: false
 
-      - name: E2E tests with Maestro
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
+      - name: Save preview output
+        id: save-preview-output
+        run: |
+          echo "androidId=${{ steps.preview.outputs.androidId }}" >> $GITHUB_ENV
+          echo "iosId=${{ steps.preview.outputs.iosId }}" >> $GITHUB_ENV
 
-      - run: npx envinfo
+  e2e-tests:
+    needs: setup
+    timeout-minutes: 90
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        api-level: [26, 27, 28]
+        arch: [x86, x86_64]
+        target: [default]
+        include:
+          - api-level: 26
+            target: google_apis
+            arch: x86
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -98,15 +105,9 @@ jobs:
             npx envinfo
             # verify emulator is running
             adb devices
+
       - name: Run Maestro E2E tests
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
           export PATH="$PATH":"$HOME/.maestro/bin"
-          yarn test:e2e:ci:ubuntu:android --android-update-id ${{ steps.preview.outputs.androidId }} --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --tags pr,weekly,deploy --name Deploy
-#          yarn test:e2e:ci:ios --ios-update-id ${{ steps.preview.outputs.iosId }} --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --tags pr,weekly,deploy --name Deploy
-#      - name: Deploy to Production
-#        run: |
-#          # Uncomment the following lines to build and submit to the app store
-#          # eas build --platform all --profile production
-#          # eas submit --platform all --profile production
-#          echo "Successfully built and submitted to the app store"
+          yarn test:e2e:ci:ubuntu:android --android-update-id ${{ env.androidId }} --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --tags pr,weekly,deploy --name Deploy
