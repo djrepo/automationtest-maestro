@@ -143,7 +143,7 @@ const {
 if (platform !== "ios" && platform !== "android")
   throw new Error("Invalid platform. Must be 'ios' or 'android'");
 
-const downloadAndSendToMaestro = async () => {
+const downloadAndSendToMaestroLocal = async () => {
   const url = await getEASAppArchiveUrl({
     platform,
     appIdentifier,
@@ -157,8 +157,9 @@ const downloadAndSendToMaestro = async () => {
   }
 
   void sendToMaestroLocalhost({
-    apiKey
+    apiKey,
+    appPath: tmpPath
   });
 };
 
-void downloadAndSendToMaestro();
+void downloadAndSendToMaestroLocal();

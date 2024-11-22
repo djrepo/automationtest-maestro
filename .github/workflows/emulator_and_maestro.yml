@@ -46,7 +46,7 @@ jobs:
         uses: expo/expo-github-action/preview@v8
         id: preview
         with:
-          command: eas build --platform all --profile preview
+          command: eas build --platform android --profile preview
           comment: false
 
       - name: Save preview output
@@ -75,6 +75,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
 
       - name: Setup Java
         uses: actions/setup-java@v3
