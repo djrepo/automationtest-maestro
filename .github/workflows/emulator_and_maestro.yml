@@ -63,7 +63,7 @@ jobs:
           comment: false
 
       - name: E2E tests with Maestro
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
@@ -78,7 +78,7 @@ jobs:
       - name: Install Maestro
         run: MAESTRO_VERSION=1.39.2 curl -Ls 'https://get.maestro.mobile.dev' | bash
 
-      - name: Run Maestro E2E tests
+      - name: Install android emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -98,6 +98,7 @@ jobs:
             npx envinfo
             # verify emulator is running
             adb devices
+      - name: Run Maestro E2E tests
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
           export PATH="$PATH":"$HOME/.maestro/bin"
