@@ -1,0 +1,111 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix: # only these combinations work stable on `ubuntu-*`:
+        api-level: [26, 27, 28]
+        arch: [x86, x86_64]
+        target: [default]
+        # Print all available Android emulators: `sdkmanager --list --verbose | grep system-images`
+        include:
+          - api-level: 26
+            target: google_apis
+            arch: x86
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+            .yarn/cache
+            .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Create preview
+        uses: expo/expo-github-action/preview@v8
+        id: preview
+        with:
+          #        command: eas update --auto
+          command: eas build --platform all --profile preview
+          comment: false
+
+      - name: E2E tests with Maestro
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - run: npx envinfo
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Install Maestro
+        run: MAESTRO_VERSION=1.39.2 curl -Ls 'https://get.maestro.mobile.dev' | bash
+
+      - name: Run Maestro E2E tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
+          cores: 2
+          ram-size: 2048M
+          force-avd-creation: false
+          emulator-boot-timeout: 900 # 15min
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          pre-emulator-launch-script: |
+            echo "Running pre emulator launch script. Printing the working directory now:"
+            pwd
+          script: |
+            # check memory usage
+            npx envinfo
+            # verify emulator is running
+            adb devices
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          export PATH="$PATH":"$HOME/.maestro/bin"
+          yarn test:e2e:ci:ubuntu:android --android-update-id ${{ steps.preview.outputs.androidId }} --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --tags pr,weekly,deploy --name Deploy
+#          yarn test:e2e:ci:ios --ios-update-id ${{ steps.preview.outputs.iosId }} --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --tags pr,weekly,deploy --name Deploy
+#      - name: Deploy to Production
+#        run: |
+#          # Uncomment the following lines to build and submit to the app store
+#          # eas build --platform all --profile production
+#          # eas submit --platform all --profile production
+#          echo "Successfully built and submitted to the app store"

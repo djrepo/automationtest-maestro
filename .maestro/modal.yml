@@ -6,8 +6,7 @@ tags:
 - runFlow: helper/openApp_preview.yml
 - tapOn:
     id: "modal-info"
-- assertVisible:
-    id: "dialog-title"
+- assertVisible: "A cool modal"
 - runFlow:
     when:
       platform: iOS
